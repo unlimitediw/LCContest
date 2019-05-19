@@ -83,6 +83,33 @@ class Solution(object):
             idx += 1
         return memo
 
+    def tallestBillboard(self, rods):
+        """
+        :type rods: List[int]
+        :rtype: int
+        """
+
+        total = sum(rods)
+        dp = [0 for _ in range(2 * total + 1)]
+        visited = [0 for _ in range(2 * total + 1)]
+        visited[total] = 1
+        for i in range(len(rods)):
+            nextDp = dp[:]
+            nextVisited = visited[:]
+            for j in range(len(dp)):
+                if visited[j]:
+                    if j + rods[i] < len(dp):
+                        if not visited[j + rods[i]]:
+                            nextVisited[j + rods[i]] = 1
+                        nextDp[j + rods[i]] = max(dp[j] + rods[i], nextDp[j + rods[i]])
+                    if j - rods[i] >= 0:
+                        if not visited[j - rods[i]]:
+                            nextVisited[j - rods[i]] = 1
+                        nextDp[j - rods[i]] = max(dp[j] + rods[i], nextDp[j - rods[i]])
+            dp = nextDp[:]
+            visited = nextVisited[:]
+        return dp[total] // 2
+
 
 A = Solution()
-print(A.minDeletionSize( ["ca","bb","ac"]))
+print(A.tallestBillboard([61,45,43,54,40,53,55,47,51,59,42]))
