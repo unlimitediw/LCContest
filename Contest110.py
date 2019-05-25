@@ -109,6 +109,12 @@ class Solution:
                     ans = min(ans, (keys[j] - keys[i]) * mindiff)
 
         return ans if ans < 10 ** 100 else 0
+
+
+    def distinctSubseqII(self, S: str) -> int:
+        res = 0
+        return res % (10**9 + 7)
+
 A = Solution()
 t = TreeNode(3)
 t.left = TreeNode(1)
